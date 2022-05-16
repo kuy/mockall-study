@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "./domain",
+    "./usecase",
+    "./gateway",
+    "./driver",
+]
