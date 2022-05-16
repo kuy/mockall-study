@@ -2,7 +2,7 @@ pub struct AwesomeCoffeeMachine;
 
 #[mockall::automock]
 impl AwesomeCoffeeMachine {
-    pub fn brew_coffee(&self, _name: String) -> Liquid {
+    pub async fn brew_coffee(&self, _name: String) -> Liquid {
         Liquid { amount: 120 }
     }
 }

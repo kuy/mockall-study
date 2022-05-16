@@ -1,6 +1,7 @@
 use domain::Coffee;
 
+#[async_trait::async_trait]
 #[mockall::automock]
 pub trait CoffeePort {
-  fn get_coffee(&self, name: String) -> Coffee;
+  async fn get_coffee(&self, name: String) -> Coffee;
 }

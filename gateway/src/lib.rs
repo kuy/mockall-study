@@ -8,9 +8,10 @@ pub struct CoffeeGateway {
     driver: AwesomeCoffeeMachine
 }
 
+#[async_trait::async_trait]
 impl CoffeePort for CoffeeGateway {
-    fn get_coffee(&self, name: String) -> Coffee {
-        let liquid = self.driver.brew_coffee(name.clone());
+    async fn get_coffee(&self, name: String) -> Coffee {
+        let liquid = self.driver.brew_coffee(name.clone()).await;
         Coffee { name, amount: liquid.amount }
     }
 }
@@ -21,8 +22,8 @@ mod tests {
     use driver::awesome_coffee_machine::Liquid;
     use mockall::predicate::*;
 
-    #[test]
-    fn test_find_by_hoge() {
+    #[tokio::test]
+    async fn test_find_by_hoge() {
         let mut driver = AwesomeCoffeeMachine::new();
         driver
             .expect_brew_coffee()
@@ -32,7 +33,7 @@ mod tests {
 
         let target = CoffeeGateway { driver };
 
-        let actual = target.get_coffee("Ethiopia".into());
+        let actual = target.get_coffee("Ethiopia".into()).await;
         let expected = Coffee { name: "Ethiopia".into(), amount: 200 };
 
         assert_eq!(actual, expected);
